@@ -1,0 +1,56 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary">
+        <!-- <ion-icon slot="icon-only" name="arrow-back"></ion-icon> -->
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/login">Login</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="contenedorLogin">
+    <div id="header">
+      <h1>Crea tu Cuenta</h1>
+      <img src="assets/images/registrar.svg" />
+    </div>
+    <form class="form" [formGroup]="credencialesFormulario">
+      <div class = "txtError" *ngIf="(email.dirty) && email.errors">
+        <span *ngIf="email.errors?.required">Correo es requerido</span>
+        <span *ngIf="email.errors?.email">Correo es invalido</span>
+      </div>
+      <ion-item class="ion-margin-bottom">
+        <ion-input  placeholder = "Correo"
+                    formControlName = "email"
+                    autofocus = "true"
+                    clearInput = "true">
+        </ion-input>        
+      </ion-item>
+      <div class = "txtError" *ngIf="(username.dirty) && username.errors">
+        <span *ngIf="username.errors?.required">Nombre de Usuario es requerido</span>
+      </div>
+      <ion-item class="ion-margin-bottom">
+        <ion-input  placeholder = "Username"
+                    formControlName = "username"
+                    autofocus = "true"
+                    clearInput = "true">
+        </ion-input>        
+      </ion-item>
+      <div class = "txtError" *ngIf="(password.dirty) && password.errors">
+        <span *ngIf="password.errors?.required">Contraseña es requerido</span>
+        <span *ngIf="password.errors?.minlength">Contraseña necesita tener 6 caracteres minimo</span>
+      </div>
+      <ion-item class="ion-margin-bottom">       
+        <ion-input  placeholder = "Contraseña"
+                    type = "password"
+                    formControlName = "password"        
+                    clearInput = "true">
+        </ion-input>        
+      </ion-item>
+      <ion-button (click)="signUp()" class="botonLogin" expand="block" shape="round">Registrarse</ion-button>
+    </form>  
+  </div>
+</ion-content>

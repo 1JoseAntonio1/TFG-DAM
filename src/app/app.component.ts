@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ChatService } from './services/chat.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private router: Router,
+              private chatService: ChatService) {}
+
+  // desloguear(){
+  //   this.chatService.desloguarUsuario();
+  //   this.router.navigateByUrl('/chats', { replaceUrl: true})
+  // }
 }

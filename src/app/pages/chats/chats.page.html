@@ -1,0 +1,78 @@
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar class="ion-padding">
+    <ion-menu-button style="color: #fff;" slot="start" menu="main-menu"></ion-menu-button>
+    <ion-avatar *ngIf="UsuarioEmisor | async as UE" class="datos" slot="end">
+      <p>{{UE.username}}</p>
+      <img [src]="'./../../../assets/images/avatares/' + UE.avatar + '.png'">      
+    </ion-avatar>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="UsuarioEmisor | async as UE">
+  <div class="tabs ion-padding abs">
+    <ion-segment value="chats" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="chats">
+        <ion-label>Chats</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="status">
+        <ion-label>Estados</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="friends">
+        <ion-label>Amigos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <!-- Chats -->
+  <div class="chat-list" *ngIf="activeTab === 'chats'">
+    <div class="recent-chats ion-padding">
+      <div class="heading">
+        <h1>Cahts Recientes</h1>
+        <!-- <ion-icon name="search-sharp"></ion-icon> -->
+      </div>
+      <div class="chats">
+        <div class="aviso" *ngIf="listaDeChatsNoObservable.length == 0">
+          <p>No tienes Chats Actualmente con nadie</p>
+        </div> 
+        <div *ngFor="let chatReciente of listaDeChatsNoObservable ">
+          <ion-item lines="none" (click)="irAChat(chatReciente.uidYo, chatReciente.uidOtraPersona)">
+            <ion-avatar slot="start">            
+              <img [src]="'./../../../assets/images/avatares/' + chatReciente.avatarOtraPersona + '.png'">      
+            </ion-avatar>
+            <ion-label class="ion-text-nowrap">
+              <h2>{{chatReciente.usernameOtraPersona}}</h2>
+              <p>{{chatReciente.MensajeUltimoUsuario}}</p>
+            </ion-label>
+          </ion-item>
+          
+        </div>      
+      </div>
+    </div>
+  </div>
+
+  <!-- Estados -->
+  <div class="chat-list" *ngIf="activeTab === 'status'">
+    <div>Estados</div>
+  </div>
+
+  <!-- Amigos -->
+  <div class="chat-list" *ngIf="activeTab === 'friends'">
+    <div class="recent-chats ion-padding">
+      <div class="heading">
+        <h1>Gente Para Hablar</h1>
+        <ion-searchbar placeholder="Buscar Username.." [debounce]="250" (ionChange)="buscarUsuario($event)"></ion-searchbar>
+      </div>
+      <div class="chats">        
+          <div *ngFor="let usaurioPosiblesAmigos of listaDeUsuariosPosiblesAmigosNoObservable ">
+            <ion-item *ngIf="usaurioPosiblesAmigos.uid != UE.uid" lines="none" (click)="irAChat(UE.uid, usaurioPosiblesAmigos.uid)">
+              <ion-avatar slot="start" >            
+                <img [src]="'./../../../assets/images/avatares/' + usaurioPosiblesAmigos.avatar + '.png'">      
+              </ion-avatar>
+              <ion-label class="ion-text-nowrap">
+                <h2>{{usaurioPosiblesAmigos.username}}</h2>
+              </ion-label>
+            </ion-item>  
+          </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
